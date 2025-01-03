@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amine Karmous RAG Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="chat-app">
+        <header class="chat-header">
+            <div class="branding">
+                <img src="/static/logo.png" alt="Logo" class="logo">
+                <h1>Amine Karmous RAG Chatbot (Chat with your PDF)</h1>
+            </div>
+        </header>
+        <main class="chat-container">
+            <section class="chat-history" id="chat-history">
+                <!-- Chat messages will dynamically appear here -->
+            </section>
+            <section class="chat-controls">
+                <label for="pdf-upload" class="upload-btn">
+                    <i class="fas fa-file-upload"></i> Upload PDFs
+                </label>
+                <input type="file" id="pdf-upload" multiple accept="application/pdf" hidden>
+                <div class="question-box">
+                    <input type="text" id="question-input" placeholder="Type your message here...">
+                    <button id="ask-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
