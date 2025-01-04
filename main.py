@@ -64,7 +64,7 @@ async def upload_pdf(files: list[UploadFile] = File(...)):
     # Create the vector store
     vectors = FAISS.from_documents(final_documents, embeddings)
 
-    return {"message": "PDFs uploaded and processed successfully!"}
+    return {"message": "PDF uploaded and processed successfully!"}
 
 @app.post("/ask-question/")
 async def ask_question(question: str = Form(...)):
