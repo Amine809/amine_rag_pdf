@@ -37,7 +37,6 @@ pip install -r requirements.txt
 ```
 - Configure Environment Variables Create a .env file in the root directory and add your API keys:
 ```
-.env
 GROQ_API_KEY="#########"
 GOOGLE_API_KEY="#########"
 
