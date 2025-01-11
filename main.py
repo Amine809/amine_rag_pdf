@@ -82,6 +82,19 @@ async def get_upload_status():
 async def upload_pdf(files: list[UploadFile] = File(...)):
     global vectors, final_documents, processing_status
     
+    # Clear the temporary directory and reset variables
+    if os.path.exists(TEMP_DIR):
+        shutil.rmtree(TEMP_DIR)
+    os.makedirs(TEMP_DIR, exist_ok=True)
+    vectors = None
+    final_documents = []
+    processing_status = {
+        "current_file": "",
+        "total_files": 0,
+        "processed_files": 0,
+        "status": "idle"
+    }
+    
     start_time = time.time()
     processing_status["status"] = "processing"
     processing_status["total_files"] = len(files)
@@ -203,3 +216,4 @@ async def cleanup():
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
