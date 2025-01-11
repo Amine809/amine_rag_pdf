@@ -37,6 +37,7 @@ pip install -r requirements.txt
 ```
 - Configure Environment Variables Create a .env file in the root directory and add your API keys:
 ```
+.env
 GROQ_API_KEY="#########"
 GOOGLE_API_KEY="#########"
 
@@ -71,17 +72,82 @@ uvicorn main:app --reload
 ├── README.md               # Project documentation
 ```
 
-## API Endpoints
-## POST `/upload-pdf/`
-- **Description**: Upload PDF files for processing.
-- **Request**: FormData containing one or more PDF files.
-- **Response**: Success message.
-## POST `/ask-question/`
-- **Description**:Ask a question about the uploaded PDFs.
-- **Request**:FormData containing the question.
-- **Response**:Assistant's answer or an error message.
-## Notes
-- Ensure you have the correct API keys in your .env file for proper functionality.
+## Backend API Documentation
+
+The backend is implemented using FastAPI and provides RESTful endpoints for handling PDF uploads, processing, and question answering. Below is the detailed documentation for the backend APIs.
+
+---
+
+### **API Endpoints**
+
+#### **1. GET `/`**
+- **Description**: Serves the home route.
+- **Response**:
+  - Returns the index.html page for the front-end interface.
+
+---
+
+#### **2. POST `/upload-pdf/`**
+- **Description**: Handles the upload and processing of one or more PDF files.
+- **Request**:
+  - **Method**: `POST`
+  - **Content-Type**: `multipart/form-data`
+  - **Body Parameters**:
+    - `files`: A list of PDF files to be uploaded.
+- **Response**:
+  - **Success (200)**:
+    - Returns a success message, the time taken to process the files, and the number of documents processed.
+      ```json
+      {
+       "message": "PDF uploaded and processed successfully!",
+       "processing_time": "X.XX seconds",
+       "documents_processed": X
+      }
+      ```
+  - **Error (400/500)**:
+    - Returns an error message if file upload or processing fails.
+    
+- **Processing Steps**:
+  - Save the uploaded files temporarily.
+  - Extract text from the PDFs using `PyPDFDirectoryLoader`.
+  - Chunk the text for embedding using `RecursiveCharacterTextSplitter`.
+  - Embed the text and store it in a FAISS vector database for similarity search.
+
+---
+
+#### **3. POST `/ask-question/`**
+- **Description**: Processes a question related to the content of uploaded PDFs and generates an answer.
+- **Request**:
+  - **Method**: `POST`
+  - **Content-Type**: `application/json`
+  - **Body Parameters**:
+    - `question` (string): The question asked by the user.
+- **Response**:
+  - **Success (200)**:
+    - Returns the answer to the question, the response time, and the full chat history.
+    - **Example**:
+      ```json
+      {
+        "response": "The document discusses advanced AI techniques.",
+        "response_time": "2.15 seconds",
+        "history": [
+          {
+            "question": "What is the document about?",
+            "answer": "The document discusses advanced AI techniques.",
+            "response_time": "2.15 seconds"
+          }
+        ]
+      }
+      
+- **Processing Steps**:
+  - Retrieve relevant content from the FAISS vector store using similarity search.
+  - Pass the retrieved content and question to the `ChatGroq` model (`LLaMA 3`) to generate the answer.
+  - Append the response to the session’s chat history.
+
+---
+
+
+
 
 
 
