@@ -14,8 +14,8 @@ This FastAPI-based chat application allows users to upload PDF files and ask que
 - Python 3.9 or later.
 - A virtual environment set up (recommended).
 - API keys for:
-  - Groq API from https://groq.com/
-  - Google API from https://ai.google.dev/
+  - Groq API from https://groq.com/ ,This is a complete comprehensive video that you can follow to have this api key (link:https://drive.google.com/file/d/1HfmG-WfeusmoXIC4Ki0u3dXkh1hSPGFN/view?usp=sharing)
+  - Google API from https://ai.google.dev/, this is also a comprehensive video shared from my drive to have this api key (link :https://drive.google.com/file/d/1HfmG-WfeusmoXIC4Ki0u3dXkh1hSPGFN/view?usp=sharing)
 
 ## Setup
 - Clone the repository 
@@ -97,16 +97,24 @@ The backend is implemented using FastAPI and provides RESTful endpoints for hand
 - **Response**:
   - **Success (200)**:
     - Returns a success message, the time taken to process the files, and the number of documents processed.
+    
       ```json
       {
-       "message": "PDF uploaded and processed successfully!",
-       "processing_time": "X.XX seconds",
-       "documents_processed": X
+         "message": "Pdf(s) processed successfully!",
+         "processing_time": "1.87 seconds"
       }
       ```
-  - **Error (400/500)**:
-    - Returns an error message if file upload or processing fails.
-    
+  - **Error (400)**:
+    - Returns an error if the file uploaded is not a pdf file .
+     ```json
+      {
+       "message": "Some files were not PDFs and could not be processed.",
+       "processing_time": "0.00 seconds",
+       "invalid_files": [
+        "presentation_projet_big_data.pptx"
+    ]
+      }
+      ```
 - **Processing Steps**:
   - Save the uploaded files temporarily.
   - Extract text from the PDFs using `PyPDFDirectoryLoader`.
@@ -128,15 +136,42 @@ The backend is implemented using FastAPI and provides RESTful endpoints for hand
     - **Example**:
       ```json
       {
-        "response": "The document discusses advanced AI techniques.",
-        "response_time": "2.15 seconds",
-        "history": [
-          {
-            "question": "What is the document about?",
-            "answer": "The document discusses advanced AI techniques.",
-            "response_time": "2.15 seconds"
-          }
-        ]
+        "response": "Based on the provided context, the objectives of this project are:\n\n1. Detect fraudulent credit card transactions.\n2. Compare the performance of Isolation Forest and DBSCAN algorithms.",
+        "response_time": "5.48 seconds",
+       "history": [
+        {
+            "question": "what is this project is about",
+            "answer": "Based on the provided context, the project is about:\n\n**Credit card fraud detection using Isolation Forest and DBSCAN algorithms for anomaly detection.**",
+            "response_time": "1.73 seconds"
+        },
+        {
+            "question": "give me objectives of this project",
+            "answer": "According to the provided context, the objectives of this project are:\n\n1. Detect fraudulent credit card transactions.\n2. Compare the performance of Isolation Forest and DBSCAN algorithms.",
+            "response_time": "1.45 seconds"
+        },
+        {
+            "question": "what is this project about?",
+            "answer": "Based on the provided context, the project is about detecting fraudulent credit card transactions and comparing the performance of Isolation Forest and DBSCAN algorithms for anomaly detection.",
+            "response_time": "0.94 seconds"
+        },
+        {
+            "question": "give me the dimensions of datset used in this project",
+            "answer": "According to the provided context, the dataset used in this project has:\n\n* ~284,807 rows\n* 31 columns\n\nNote that the target variable is a binary class label (0 = Normal, 1 = Fraud), which is not included in the count of columns.",
+            "response_time": "1.94 seconds"
+        },
+        {
+            "question": "give me the objectives of this project",
+            "answer": "Based on the provided context, the objectives of this project are:\n\n1. Detect fraudulent credit card transactions.\n2. Compare the performance of Isolation Forest and DBSCAN algorithms.",
+            "response_time": "5.48 seconds"
+        }
+    ]
+      }
+- **Error (400)**:
+    - Bad Request: No PDF files uploaded.
+    - **Example**:
+      ```json
+      {
+        "error": "No PDFs uploaded. Please upload PDF files before asking questions."
       }
       
 - **Processing Steps**:
@@ -147,13 +182,35 @@ The backend is implemented using FastAPI and provides RESTful endpoints for hand
 ---
 
 
+### **4. POST `/upload-status/`**
+- **Description**: Provides the current status of PDF upload and processing.
+- **Request**:
+  - **Method**: `POST`
+  - **Response after uploading a pdf**:
+    - Returns the current processing status as a JSON object after uploading a pdf file
+    - **Example in my app**:
+      ```json
+      {
+      "current_file": "Black and Purple Gradient Modern Artificial Intelligence Presentation.pdf",
+      "total_files": 1,
+      "processed_files": 1,
+      "status": "completed"
+      }
+    
+   - **Response after uploading files different from pdf:**
+     - This is shows the result of upload-status api while uploading files different from pdf(exemple:powerpoint file) .
+    - **Example**:
+      ```json
+      {
+        "current_file": "presentation_projet_big_data.pptx",
+       "total_files": 1,
+       "processed_files": 0,
+       "status": "completed_with_errors"
+      }
 
+-You can follow the video link below shared in my drive to view my backend apis demo.I've used postman to test my apis.
 
-
-
-## Troubleshooting
-**PDF Upload Fails**: Ensure the backend server is running and accessible.
-**Questions Not Responded To**: Verify that the API keys are correctly configured and valid.
+Link:https://drive.google.com/file/d/1Frzn-fdmhlq-4omfkuRzsExsxp2W2qKw/view?usp=sharing
 
 
 
