@@ -70,6 +70,8 @@ uvicorn main:app --reload
 ├── requirements.txt        # Python dependencies
 ├── README.md               # Project documentation
 ```
+## 🎥 Video demo to run the app following this steps:
+link:https://drive.google.com/file/d/1rAhVV6d2b825hoDx18RHGbemqn0fb4P6/view?usp=sharing
 
 ## Backend API Documentation
 
@@ -210,6 +212,8 @@ The backend is implemented using FastAPI and provides RESTful endpoints for hand
 -You can follow the video link below shared in my drive to view my backend apis demo.I've used postman to test my apis.
 
 Link:https://drive.google.com/file/d/1Frzn-fdmhlq-4omfkuRzsExsxp2W2qKw/view?usp=sharing
+
+
 
 
 
