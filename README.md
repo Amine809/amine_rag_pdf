@@ -26,7 +26,7 @@ cd <repository-directory>
 ```
 - Set Up the Virtual Environment
 ```
-python3 -m venv venv
+python -m venv venv
 .\venv\Scripts\activate
 
 
