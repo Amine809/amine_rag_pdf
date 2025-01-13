@@ -48,12 +48,12 @@ uvicorn main:app --reload
 1-Upload PDFs:
 - Click the upload button to select pdf file
 -  Wait for the server to process the files. A success message will be displayed.
-
+  
 2-Ask questions:
 - Type your question into the input box.
 - Click the "Ask" button to send the question.
 - The assistant's response will appear in the chat history.
-- 
+  
 3-Chat Interface:
 - User messages are shown on the left in blue bubbles.
 - Assistant responses are shown on the right in green bubbles.
