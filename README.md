@@ -70,7 +70,7 @@ uvicorn main:app --reload
 ├── requirements.txt        # Python dependencies
 ├── README.md               # Project documentation
 ```
-## 🎥 Video demo to run the app following this steps:
+## 🎥 Video demo to run the app following the previous steps:
 link:https://drive.google.com/file/d/1rAhVV6d2b825hoDx18RHGbemqn0fb4P6/view?usp=sharing
 
 ## Backend API Documentation
